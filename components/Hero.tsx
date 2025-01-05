@@ -1,7 +1,6 @@
 import Image from "next/image";
 import React from "react";
 import Navbar from "./Navbar";
-import { FaChevronRight } from "react-icons/fa";
 import GetStarted from "./GetStarted";
 
 export default function Hero() {

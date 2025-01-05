@@ -5,6 +5,7 @@ import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { PiSignOutThin } from "react-icons/pi";
 
 export default function Navbar() {
   // const session = await auth()
@@ -35,16 +36,39 @@ export default function Navbar() {
             src="/netflix_logo.svg"
             alt="netflix logo"
             width={150}
-            height={80}
+            height={150}
+            className="w-150px] h-[80px]"
           />
         </Link>
-        <ul className="flex items-center gap-8">
+        <ul className="flex items-center gap-2">
           {session ? (
             <>
-              <li className="flex gap-4 items-center">
-                <p>{session.user?.email}</p>
-                <button onClick={() => signOut()}>Sign out</button>
-              </li>
+              <div className="flex gap-2 items-center w-full ">
+                {session.user?.image ? (
+                  <Image
+                    src={session.user?.image}
+                    alt="user image"
+                    width={30}
+                    height={30}
+                    className="rounded-md"
+                  />
+                ) : (
+                  <Image
+                    src="/avatar.png"
+                    alt="user image"
+                    width={30}
+                    height={30}
+                    className="rounded-md"
+                  />
+                )}
+                <p className="text-sm  w-max">{session.user?.name}</p>
+              </div>
+              <div className=" w-[150px] flex items-center gap-2 bg-red-700 px-4 py-2 rounded-md">
+                <PiSignOutThin />
+                <button onClick={() => signOut()} className="w-max rounded-md">
+                  Sign out
+                </button>
+              </div>
             </>
           ) : (
             // <li>

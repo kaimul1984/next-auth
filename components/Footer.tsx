@@ -1,83 +1,84 @@
+import Link from "next/link";
 import React from "react";
 import { IoLanguage } from "react-icons/io5";
 
 export default function Footer() {
   return (
-    <div className="w-full min-h-[200px] bg-black py-16 px-14">
+    <div className="w-full min-h-[200px] bg-[#141414] py-16 px-14">
       <div className="w-full max-w-[1320px] mx-auto text-white">
         <span className="text-white font-bold text-lg">
           Questions? Phone{" "}
-          <a href="/" className="underline">
+          <Link href="/" className="underline">
             1-800-404-982
-          </a>
+          </Link>
         </span>
         <div className="w-full flex items-center justify-between mt-8 mb-12">
           <div className="flex-1">
             <h3 className="mb-4">FAQ</h3>
             <ul className="flex flex-col gap-4">
-              <a href="/" className="underline text-sm text-neutral-500">
+              <Link href="/" className="underline text-sm text-neutral-500">
                 Investors relations
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 But Gift cards
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Cookies preferences
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Legal notices
-              </a>
+              </Link>
             </ul>
           </div>
           <div className="flex-1">
             <h3 className="mb-4">Help Centre</h3>
             <ul className="flex flex-col gap-4">
-              <a href="/" className="underline text-sm text-neutral-500">
+              <Link href="/" className="underline text-sm text-neutral-500">
                 Investors relations
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 But Gift cards
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Cookies preferences
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Legal notices
-              </a>
+              </Link>
             </ul>
           </div>
           <div className="flex-1">
             <h3 className="mb-4">Account</h3>
             <ul className="flex flex-col gap-4">
-              <a href="/" className="underline text-sm text-neutral-500">
+              <Link href="/" className="underline text-sm text-neutral-500">
                 Investors relations
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 But Gift cards
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Cookies preferences
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Legal notices
-              </a>
+              </Link>
             </ul>
           </div>
           <div className="flex-1">
             <h3 className="mb-4">Media Centre</h3>
             <ul className="flex flex-col gap-4">
-              <a href="/" className="underline text-sm text-neutral-500">
+              <Link href="/" className="underline text-sm text-neutral-500">
                 Investors relations
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 But Gift cards
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Cookies preferences
-              </a>
-              <a href="/" className=" underline text-sm text-neutral-500">
+              </Link>
+              <Link href="/" className=" underline text-sm text-neutral-500">
                 Legal notices
-              </a>
+              </Link>
             </ul>
           </div>
         </div>

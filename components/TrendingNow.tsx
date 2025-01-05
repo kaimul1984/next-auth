@@ -54,7 +54,7 @@ export default function TrendingNow() {
     setSelectedOption(event.target.value);
   };
 
-  var settings = {
+  const settings = {
     dots: true,
     infinite: false,
     speed: 500,

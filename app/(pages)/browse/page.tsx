@@ -1,10 +1,14 @@
 import { auth } from "@/auth";
-import HomeNav from "@/components/HomeNav";
+//import HomeNav from "@/components/HomeNav";
 import MovieSlider from "@/components/MovieSlider";
-import Player from "@/components/Player";
+import MyList from "@/components/MyList";
+
 import RandomMovie from "@/components/RandomMovie";
+import { getMyListMovies } from "@/libs/actions/addMovie.actions";
 import {
+  getPopularTvSeries,
   getRandomMovie,
+  getTopRatedMovies,
   getTrendingMovie,
   getTrendingTVshows,
 } from "@/libs/actions/trailer.action";
@@ -18,22 +22,32 @@ export const metadata: Metadata = {
 };
 export default async function Browse() {
   const session = await auth();
-  if (!session) {
+  // console.log(session);
+  if (!session?.user?.id) {
     redirect("/");
   }
+  const userId = session.user.id;
   const randomMovies = await getRandomMovie();
   const trendingMovies = await getTrendingMovie();
   const trendingTVshows = await getTrendingTVshows();
+  const toopRatedMovies = await getTopRatedMovies();
+  const popularTvSeries = await getPopularTvSeries();
+  const myListMovies = await getMyListMovies(userId);
   //console.log(trendingMovies);
 
   return (
-    <div className="bg-black h-auto w-screen">
-      <HomeNav session={session} />
+    <div className="bg-[#141414] h-auto w-screen">
       <RandomMovie randomMovies={randomMovies} />
 
-      <div className=" w-full h-full pt-10 flex flex-col gap-10  relative">
-        <MovieSlider movies={trendingMovies} title="Trending Movie" />
+      <div className="-mt-[200px]">
+        <MyList movies={myListMovies} title="My Lists" />
+      </div>
+
+      <div className="bg-[#141414] w-full h-full  flex flex-col gap-10  relative">
+        <MovieSlider movies={trendingMovies} title="Trending Now" />
         <MovieSlider movies={trendingTVshows} title="TV Dramas" />
+        <MovieSlider movies={toopRatedMovies} title="Top Movies" />
+        <MovieSlider movies={popularTvSeries} title="Popular TV series" />
       </div>
     </div>
   );

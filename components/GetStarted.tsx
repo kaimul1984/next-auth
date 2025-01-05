@@ -1,7 +1,14 @@
+import { redirect } from "next/navigation";
 import React from "react";
 import { FaChevronRight } from "react-icons/fa";
 
 export default function GetStarted() {
+  const handle = async (formdata: FormData) => {
+    "use server";
+    const email = formdata.get("email");
+    redirect(`/auth/signup/?email=${email}`);
+  };
+
   return (
     <div className="mx-auto w-full flex flex-col items-center justify-center mt-4 ">
       <p className="text-center text-white">
@@ -9,7 +16,7 @@ export default function GetStarted() {
         membership.
       </p>
       <form
-        action=""
+        action={handle}
         className="flex gap-4 mt-4 w-[900px] items-center justify-center"
       >
         <input

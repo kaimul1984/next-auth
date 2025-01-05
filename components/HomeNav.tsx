@@ -1,9 +1,10 @@
 "use client";
 
 import { Session } from "next-auth";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { BiSearch } from "react-icons/bi";
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -14,9 +15,14 @@ type SessionProps = {
 };
 
 export default function HomeNav({ session }: SessionProps) {
+  const pathname = usePathname();
   //console.log(session);
   return (
-    <nav className=" w-full h-[80px] flex items-center justify-between px-14 relative z-50 ">
+    <nav
+      className={`${
+        pathname === "/browse" ? "bg-transparent" : "bg-[#141414]"
+      } w-full h-[80px] flex items-center justify-between px-14 relative z-50`}
+    >
       <div className="flex items-center gap-6">
         <Link href="/browse">
           <Image
@@ -33,22 +39,22 @@ export default function HomeNav({ session }: SessionProps) {
             </Link>
           </li>
           <li>
-            <Link className="text-white text-sm " href="/browse">
+            <Link className="text-white text-sm " href="/browse/tv-shows">
               TV Shows
             </Link>
           </li>
           <li>
-            <Link className="text-white text-sm " href="/browse">
+            <Link className="text-white text-sm " href="/browse/movies">
               Movies
             </Link>
           </li>
           <li>
-            <Link className="text-white text-sm " href="/browse">
+            <Link className="text-white text-sm " href="/browse/latest">
               New & Popular
             </Link>
           </li>
           <li>
-            <Link className="text-white text-sm " href="/browse">
+            <Link className="text-white text-sm " href="/browse/my-list">
               My List
             </Link>
           </li>
@@ -69,7 +75,7 @@ export default function HomeNav({ session }: SessionProps) {
                 <div className="flex gap-2 items-center p-4 mb-4 w-full">
                   {session.user?.image ? (
                     <Image
-                      src={session.user?.image!}
+                      src={session.user?.image}
                       alt="user image"
                       width={30}
                       height={30}

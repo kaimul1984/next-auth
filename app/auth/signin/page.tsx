@@ -5,7 +5,7 @@ import PasswordInput from "@/components/Password";
 import Image from "next/image";
 import { BsDashLg } from "react-icons/bs";
 import { revalidatePath } from "next/cache";
-import Footer from "@/components/Footer";
+
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
@@ -155,9 +155,6 @@ export default async function SignInPage(props: {
             </button>
           </form>
         </div>
-      </div>
-      <div className=" bg-black/90 relative -mb-[200px] z-50 w-full">
-        <Footer />
       </div>
     </div>
   );

@@ -1,12 +1,11 @@
 "use server";
 
 const apiKey = "2615b49551726ef16fee0962175bffe4";
+const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function getRandomMovie() {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`
-    );
+    const res = await fetch(`${BASE_URL}/movie/now_playing?api_key=${apiKey}`);
     const data = await res.json();
 
     // const randomMovie =
@@ -18,7 +17,7 @@ export async function getRandomMovie() {
 }
 
 // const trailerRes = await fetch(
-//   `https://api.themoviedb.org/3/movie/${randomMovie.id}/videos?api_key=${apiKey}`
+//   `${BASE_URL}/movie/${randomMovie.id}/videos?api_key=${apiKey}`
 // );
 // const trailerData = await trailerRes.json();
 // return trailerData;
@@ -26,7 +25,7 @@ export async function getRandomMovie() {
 // const getTrailer = async (movieId) => {
 //     try {
 //       const res = await fetch(
-//         `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`
+//         `${BASE_URL}/movie/${movieId}/videos?api_key=${apiKey}`
 //       );
 //       const data = await res.json();
 
@@ -43,9 +42,7 @@ export async function getRandomMovie() {
 
 export async function getTrendingMovie() {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`
-    );
+    const res = await fetch(`${BASE_URL}/trending/all/day?api_key=${apiKey}`);
     const data = await res.json();
     return data.results;
   } catch (error) {
@@ -54,9 +51,25 @@ export async function getTrendingMovie() {
 }
 export async function getTrendingTVshows() {
   try {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/trending/tv/day?api_key=${apiKey}`
-    );
+    const res = await fetch(`${BASE_URL}/trending/tv/day?api_key=${apiKey}`);
+    const data = await res.json();
+    return data.results;
+  } catch (error) {
+    console.error("Error fetching trailer:", error);
+  }
+}
+export async function getTopRatedMovies() {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/top_rated?api_key=${apiKey}`);
+    const data = await res.json();
+    return data.results;
+  } catch (error) {
+    console.error("Error fetching trailer:", error);
+  }
+}
+export async function getPopularTvSeries() {
+  try {
+    const res = await fetch(`${BASE_URL}/tv/popular?api_key=${apiKey}`);
     const data = await res.json();
     return data.results;
   } catch (error) {

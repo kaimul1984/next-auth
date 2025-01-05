@@ -12,6 +12,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Google,
     Credentials({
+      id: "credentials",
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
@@ -37,7 +38,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // if (!isValidPassword) {
         //   throw new Error("invalid password");
         // }
-        return user;
+        // ✅ Return user object with ID
+        return {
+          id: user.id.toString(), // ✅ Convert MongoDB ObjectId to a string
+          name: user.name,
+          email: user.email,
+          image: user.image,
+        };
       },
     }),
   ],
@@ -51,4 +58,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id?.toString();
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+  },
 });

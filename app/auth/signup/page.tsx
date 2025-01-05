@@ -1,17 +1,21 @@
 import PasswordInput from "@/components/Password";
 import Image from "next/image";
 import { BsDashLg } from "react-icons/bs";
-import Footer from "@/components/Footer";
+
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import registerUser from "@/libs/actions/signup.actions";
-import toast from "react-hot-toast";
 
 export default async function SignUpPage(props: {
-  searchParams: Promise<{ error?: string; callbackUrl: string | undefined }>;
+  searchParams: Promise<{
+    error?: string;
+    email?: string;
+    callbackUrl: string | undefined;
+  }>;
 }) {
   const searchParams = await props.searchParams;
-  const { error } = searchParams;
+  const { email } = searchParams;
+
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen relative">
       <Navbar />
@@ -39,6 +43,7 @@ export default async function SignUpPage(props: {
           <input
             type="email"
             name="email"
+            defaultValue={email || ""}
             id="email"
             placeholder="Enter email"
             required
@@ -106,9 +111,6 @@ export default async function SignUpPage(props: {
             </button>
           </form>
         </div>
-      </div>
-      <div className=" bg-black/90 relative -mb-[200px] z-50 w-full">
-        <Footer />
       </div>
     </div>
   );

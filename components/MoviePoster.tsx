@@ -1,111 +1,40 @@
-// "use client";
-
-// import Image from "next/image";
-// import React, { useState } from "react";
-
-// const MoviePoster = ({ movie }) => {
-//   const [trailerUrl, setTrailerUrl] = useState("");
-//   const [error, setError] = useState("");
-
-//   const handlePosterClick = async () => {
-//     try {
-//       const apiKey = "2615b49551726ef16fee0962175bffe4"; // Use your API key
-//       const response = await fetch(
-//         `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}`
-//       );
-
-//       if (!response.ok) {
-//         throw new Error("Failed to fetch trailer");
-//       }
-
-//       const data = await response.json();
-//       const trailer = data.results.find(
-//         (video) => video.type === "Trailer" && video.site === "YouTube"
-//       );
-
-//       if (trailer) {
-//         setTrailerUrl(`https://www.youtube.com/embed/${trailer.key}`);
-//         setError("");
-//       } else {
-//         setError("Trailer not available.");
-//       }
-//     } catch (err) {
-//       setError("Failed to load trailer. Please try again.");
-//       console.error(err);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <Image
-//         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-//         alt={movie.title}
-//         onClick={handlePosterClick}
-//         style={{ cursor: "pointer" }}
-//         width={200}
-//         height={200}
-//       />
-//       {/* Modal to play trailer */}
-//   {trailerUrl && (
-//     <div
-//       style={{
-//         position: "fixed",
-//         top: "50%",
-//         left: "50%",
-//         transform: "translate(-50%, -50%)",
-//         zIndex: 1000,
-//         backgroundColor: "rgba(0, 0, 0, 0.8)",
-//         padding: "1rem",
-//       }}
-//     >
-//       <iframe
-//         width="560"
-//         height="315"
-//         src={trailerUrl}
-//         title="YouTube video player"
-//         frameBorder="0"
-//         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-//         allowFullScreen
-//       ></iframe>
-//       <button onClick={() => setTrailerUrl("")} className="text-white">
-//         Close
-//       </button>
-//     </div>
-//   )}
-//   {error && <p style={{ color: "red" }}>{error}</p>}
-//     </div>
-//   );
-// };
-
-// export default MoviePoster;
 "use client";
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
-const MoviesWithGenres = () => {
+type MovieProps = {
+  id: string;
+  backdrop_path: string;
+  overview: string;
+  poster_path: string;
+  name: string;
+  title: string;
+};
+
+const MoviesWithGenres = ({ title }: { title: string }) => {
   const [genres, setGenres] = useState([]);
   const [movies, setMovies] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [trailerUrl, setTrailerUrl] = useState("");
-  const [error, setError] = useState("");
+  const [hoveredMovie, setHoveredMovie] = useState(null);
+  let hoverTimeout: NodeJS.Timeout;
 
   const apiKey = "2615b49551726ef16fee0962175bffe4"; // Use your API key
 
-  // Fetch genres and all movies on initial load
   useEffect(() => {
     const fetchGenresAndMovies = async () => {
       try {
         // Fetch genres
         const genreResponse = await fetch(
-          `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`
+          `https://api.themoviedb.org/3/genre/${title}/list?api_key=${apiKey}`
         );
         const genreData = await genreResponse.json();
         setGenres(genreData.genres);
 
         // Fetch all movies
         const movieResponse = await fetch(
-          `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}`
+          `https://api.themoviedb.org/3/discover/${title}?api_key=${apiKey}`
         );
         const movieData = await movieResponse.json();
         setMovies(movieData.results);
@@ -117,11 +46,10 @@ const MoviesWithGenres = () => {
     fetchGenresAndMovies();
   }, [apiKey]);
 
-  // Fetch movies by genre
   const fetchMoviesByGenre = async (genreId) => {
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${genreId}`
+        `https://api.themoviedb.org/3/discover/${title}?api_key=${apiKey}&with_genres=${genreId}`
       );
       const data = await response.json();
       setMovies(data.results);
@@ -131,58 +59,56 @@ const MoviesWithGenres = () => {
     }
   };
 
-  const handlePosterClick = async (movieId) => {
-    try {
-      const apiKey = "2615b49551726ef16fee0962175bffe4"; // Use your API key
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}`
-      );
+  const handlePosterHover = (movie) => {
+    clearTimeout(hoverTimeout);
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch trailer");
+    hoverTimeout = setTimeout(async () => {
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/${title}/${movie.id}/videos?api_key=${apiKey}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch trailer");
+        }
+
+        const data = await response.json();
+        const trailer = data.results.find(
+          (video) => video.type === "Trailer" && video.site === "YouTube"
+        );
+
+        setTrailerUrl(
+          trailer
+            ? `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1`
+            : ""
+        );
+        setHoveredMovie(movie);
+      } catch (err) {
+        console.error(err);
       }
+    }, 500); // Small delay before showing the trailer
+  };
 
-      const data = await response.json();
-      const trailer = data.results.find(
-        (video) => video.type === "Trailer" && video.site === "YouTube"
-      );
-
-      if (trailer) {
-        setTrailerUrl(`https://www.youtube.com/embed/${trailer.key}`);
-        setError("");
-      } else {
-        setError("Trailer not available.");
-      }
-    } catch (err) {
-      setError("Failed to load trailer. Please try again.");
-      console.error(err);
-    }
+  const handlePosterLeave = () => {
+    clearTimeout(hoverTimeout);
+    setHoveredMovie(null);
+    setTrailerUrl("");
   };
 
   return (
-    <div className="w-screen h-screen felx flex-col items-center justify-center p-8">
-      <h1>Movies</h1>
+    <div className="max-w-[1320px] mx-auto flex flex-col items-center justify-center p-8">
+      <h1 className="text-white text-3xl mb-6 capitalize">{title}</h1>
 
       {/* Genre Buttons */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "1rem",
-          marginBottom: "2rem",
-        }}
-      >
+      <div className="flex flex-wrap gap-4 mb-6">
         <button
           onClick={() => {
-            // Fetch all movies when "All" is clicked
             setSelectedGenre(null);
-            fetchMoviesByGenre(""); // Fetch without genre filter
+            fetchMoviesByGenre("");
           }}
-          style={{
-            backgroundColor: selectedGenre === null ? "blue" : "gray",
-            color: "white",
-            padding: "0.5rem 1rem",
-          }}
+          className={`px-4 py-2 rounded-md ${
+            selectedGenre === null ? "bg-blue-600 text-white" : "bg-gray-400"
+          }`}
         >
           All
         </button>
@@ -190,11 +116,11 @@ const MoviesWithGenres = () => {
           <button
             key={genre.id}
             onClick={() => fetchMoviesByGenre(genre.id)}
-            style={{
-              backgroundColor: selectedGenre === genre.id ? "blue" : "gray",
-              color: "white",
-              padding: "0.5rem 1rem",
-            }}
+            className={`px-4 py-2 rounded-md ${
+              selectedGenre === genre.id
+                ? "bg-blue-600 text-white"
+                : "bg-gray-400"
+            }`}
           >
             {genre.name}
           </button>
@@ -202,50 +128,54 @@ const MoviesWithGenres = () => {
       </div>
 
       {/* Movie List */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-        {movies.map((movie) => (
-          <div key={movie.id} style={{ width: "150px", textAlign: "center" }}>
+      <div className="flex flex-wrap justify-center gap-4">
+        {movies.map((movie: MovieProps) => (
+          <div
+            key={movie.id}
+            onMouseEnter={() => handlePosterHover(movie)}
+            onMouseLeave={handlePosterLeave}
+            className="relative w-[250px] h-[300px] bg-slate-800"
+          >
             <Image
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-              onClick={() => handlePosterClick(movie.id)}
-              width={200}
-              height={200}
-              priority
-              style={{ width: "100%", borderRadius: "8px", background: "teal" }}
+              alt={movie.title || "image"}
+              width={500}
+              height={300}
+              className="w-full h-full rounded-lg "
             />
-            <p>{movie.title}</p>
+
+            {/* Expanded Trailer Popup */}
+            {hoveredMovie?.id === movie.id && (
+              <div className="absolute top-[-50px] left-[-50px] w-[500px] h-[400px] bg-black rounded-lg shadow-lg z-50 transition-transform duration-300 ease-in-out">
+                {trailerUrl ? (
+                  <iframe
+                    src={trailerUrl}
+                    title="Movie Trailer"
+                    width="500"
+                    height="300"
+                    className="rounded-t-lg z-50"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                  ></iframe>
+                ) : (
+                  <Image
+                    src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`}
+                    alt={movie.title || movie.name}
+                    width={500}
+                    height={300}
+                    className="rounded-t-lg"
+                  />
+                )}
+                <div className="p-2 text-white">
+                  <h2 className="text-lg font-bold">
+                    {movie.title || movie.name}
+                  </h2>
+                  <p className="text-sm">{movie.overview.slice(0, 80)}...</p>
+                </div>
+              </div>
+            )}
           </div>
         ))}
-        {trailerUrl && (
-          <div
-            style={{
-              position: "fixed",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              zIndex: 1000,
-              backgroundColor: "rgba(0, 0, 0, 0.8)",
-              padding: "2rem",
-            }}
-          >
-            <iframe
-              width="560"
-              height="315"
-              src={trailerUrl}
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-            <button
-              onClick={() => setTrailerUrl("")}
-              className="text-white absolute right-0 top-0 "
-            >
-              Close
-            </button>
-          </div>
-        )}
-        {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </div>
   );
