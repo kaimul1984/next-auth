@@ -2,7 +2,8 @@ import Image from "next/image";
 import React from "react";
 
 type Movie = {
-  title: string;
+  title: string | null;
+  name: string | null;
   id: string;
   movieId: number;
   userId: string;
