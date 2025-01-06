@@ -2,10 +2,12 @@
 
 import { auth } from "@/auth";
 import { prisma } from "../prisma";
+import { revalidatePath } from "next/cache";
 
 export async function addMovieToList(
   id: number,
   title: string,
+  name: string,
   posterPath: string
 ) {
   const session = await auth();
@@ -34,6 +36,7 @@ export async function addMovieToList(
       userId,
       movieId: id, // Store the movie ID to prevent duplicates
       title,
+      name,
       posterPath,
     },
   });
@@ -42,6 +45,8 @@ export async function addMovieToList(
     success: true,
     message: "Movie has been added to your list successfully",
   };
+
+  revalidatePath("/browse");
 
   //   if (!session?.user?.id) {
   //     throw new Error("unauthorizied to add movie");

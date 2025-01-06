@@ -53,7 +53,7 @@ import TrendingNow from "@/components/TrendingNow";
 
 export default async function Home() {
   return (
-    <section className="w-full min-h-screen bg-black flex flex-col items-center">
+    <section className="w-full min-h-screen bg-[#141414] flex flex-col items-center">
       {/* {Array.isArray(movies.results) &&
         movies.results.map((movie) => (
           <MoviePoster key={movie.id} movie={movie} />

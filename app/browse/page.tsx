@@ -43,7 +43,7 @@ export default async function Browse() {
         <MyList movies={myListMovies} title="My Lists" />
       </div>
 
-      <div className="bg-[#141414] w-full h-full  flex flex-col gap-10  relative">
+      <div className="bg-[#141414] w-full h-full  flex flex-col  relative overflow-visible">
         <MovieSlider movies={trendingMovies} title="Trending Now" />
         <MovieSlider movies={trendingTVshows} title="TV Dramas" />
         <MovieSlider movies={toopRatedMovies} title="Top Movies" />

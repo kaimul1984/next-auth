@@ -72,7 +72,8 @@ model Movie {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   movieId      Int
   userId       String // User who added the movie
-  title        String
+  title        String?
+  name         String?
   posterPath   String
   backdropPath String?
   createdAt    DateTime @default(now())

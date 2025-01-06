@@ -30,18 +30,20 @@ const items = [
 
 export default function ReasonToJoin() {
   return (
-    <div className="w-full max-w-[1320px] mb-12">
+    <div className="w-[95%] max-w-[1320px] mb-12">
       <h2 className="text-white text-3xl font-bold mb-6">
         More reasons to join
       </h2>
-      <div className="w-full flex flex-wrap items-center justify-between">
+      <div className="w-full flex flex-wrap gap-4 items-center justify-between">
         {items.map((item) => (
           <div
             key={item.title}
-            className="w-[310px] h-[350px] bg-gradient-to-b from-[#14081b] from-60%  to-[#27064b] rounded-lg px-4 py-8 relative"
+            className="xl:w-[24%] lg:w-[49%] max-w-[310px] lg:max-w-[49%] xl:h-[350px] lg:h-[220px] bg-gradient-to-b from-[#14081b] from-60%  to-[#27064b] rounded-lg px-4 py-8 relative"
           >
-            <h3 className="text-white text-2xl font-bold">{item.title}</h3>
-            <p className="text-gray-500 mt-8">{item.info}</p>
+            <h3 className="text-white lg:text-[1.6vw] xl:text-[1vw] font-bold">
+              {item.title}
+            </h3>
+            <p className="text-gray-500 mt-8 lg:mt-4">{item.info}</p>
             <Image
               src={item.icon}
               alt="icon"

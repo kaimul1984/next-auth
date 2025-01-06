@@ -3,7 +3,7 @@ import React from "react";
 
 export default function LearnMore() {
   return (
-    <div className="w-full max-w-[1320px] flex items-center gap-6 mt-12">
+    <div className="w-[95%] max-w-[1320px] flex items-center gap-6 mt-12">
       <Image
         src="/popcorn.jpg"
         alt=""

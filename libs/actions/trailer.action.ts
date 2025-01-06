@@ -42,7 +42,7 @@ export async function getRandomMovie() {
 
 export async function getTrendingMovie() {
   try {
-    const res = await fetch(`${BASE_URL}/trending/all/day?api_key=${apiKey}`);
+    const res = await fetch(`${BASE_URL}/trending/movie/day?api_key=${apiKey}`);
     const data = await res.json();
     return data.results;
   } catch (error) {

@@ -45,7 +45,7 @@ export default function FAQ() {
   };
 
   return (
-    <div className="w-full max-w-[1320px] my-12">
+    <div className="w-[90%] max-w-[1320px] my-12">
       <h2 className="text-3xl text-white font-bold mb-6">
         Frequently Asked Questions
       </h2>

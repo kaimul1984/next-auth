@@ -65,7 +65,7 @@ export default function TrendingNow() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 6,
           slidesToScroll: 3,
           infinite: true,
           dots: true,
@@ -89,7 +89,7 @@ export default function TrendingNow() {
     ],
   };
   return (
-    <div className="w-full max-w-[1320px] my-16 ">
+    <div className="w-[95%] max-w-[1320px] my-16 ">
       <h2 className="font-bold text-2xl text-white">Trending now</h2>
       <div className="flex items-center bg-black border-4 border-white px-2 py-2 rounded-md w-max my-4">
         <select
@@ -121,7 +121,7 @@ export default function TrendingNow() {
                     width={500}
                     height={500}
                     priority
-                    className="w-[210px] h-[300px] rounded-lg transition-all duration-300 group-hover:scale-110 z-50"
+                    className="xl:w-[210px] xl:h-[300px] lg:w-[180] lg:h-[250px] rounded-lg transition-all duration-300 group-hover:scale-110 z-50"
                   />
                   <span className="text-8xl text-black font-bold absolute z-50 -left-6 bottom-8 drop-shadow-2xl text-stroke  ">
                     {index + 1}
