@@ -46,7 +46,7 @@ const MoviesWithGenres = ({ title }: { title: string }) => {
     fetchGenresAndMovies();
   }, [apiKey]);
 
-  const fetchMoviesByGenre = async (genreId) => {
+  const fetchMoviesByGenre = async (genreId: any) => {
     try {
       const response = await fetch(
         `https://api.themoviedb.org/3/discover/${title}?api_key=${apiKey}&with_genres=${genreId}`
