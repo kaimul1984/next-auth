@@ -36,14 +36,14 @@ export default async function Browse() {
   //console.log(trendingMovies);
 
   return (
-    <div className="bg-[#141414] h-auto w-screen">
+    <div className="bg-[#141414] min-h-screen w-screen">
       <RandomMovie randomMovies={randomMovies} />
 
       <div className="-mt-[200px]">
         <MyList movies={myListMovies} title="My Lists" />
       </div>
 
-      <div className="bg-[#141414] w-full h-full  flex flex-col  relative overflow-visible">
+      <div className="bg-[#141414] w-full h-full  flex flex-col  relative ">
         <MovieSlider movies={trendingMovies} title="Trending Now" />
         <MovieSlider movies={trendingTVshows} title="TV Dramas" />
         <MovieSlider movies={toopRatedMovies} title="Top Movies" />

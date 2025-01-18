@@ -21,7 +21,7 @@ export default function HomeNav({ session }: SessionProps) {
     <nav
       className={`${
         pathname === "/browse" ? "bg-transparent" : "bg-[#141414]"
-      } w-full h-[80px] flex items-center justify-between px-14 relative z-50`}
+      } w-full h-[80px] flex items-center justify-between px-6 lg:px-14 relative z-50`}
     >
       <div className="flex items-center gap-6">
         <Link href="/browse">
@@ -30,9 +30,10 @@ export default function HomeNav({ session }: SessionProps) {
             alt="netflix logo"
             width={100}
             height={80}
+            className="w-[80px] h-[40px]"
           />
         </Link>
-        <ul className="flex items-center gap-6">
+        <ul className="hidden lg:flex items-center gap-6">
           <li>
             <Link className="text-white text-sm " href="/browse">
               Home

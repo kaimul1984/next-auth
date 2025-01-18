@@ -86,8 +86,8 @@ export default function RandomMovie({ randomMovies }: RandomMovieProps) {
   const currentMovie = randomMovies[currentMovieIndex];
 
   return (
-    <div className="w-screen lg:h-[57vh]  2xl:h-[90vh]  relative">
-      <div className="absolute top-[-80px] left-0 w-full  bg-gradient-to-b from-gray-900  after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-gradient-to-b after:from-slate-950/30 after:from-90% after:to-[#141414] after:to-100%">
+    <div className="w-screen h-[400px] lg:h-[57vh]  2xl:h-[90vh]  relative">
+      <div className="absolute top-[-80px] left-0 w-full h-full  bg-gradient-to-b from-gray-900  after:absolute after:w-full after:h-full after:left-0 after:top-0 after:bg-gradient-to-b after:from-slate-950/30 after:from-90% after:to-[#141414] after:to-100%">
         {currentMovie && (
           <>
             <Image
@@ -98,20 +98,20 @@ export default function RandomMovie({ randomMovies }: RandomMovieProps) {
               priority
               className="w-full h-full 2xl:h-[90vh] object-fill"
             />
-            <div className="absolute top-1/2 left-12 z-50  -translate-y-1/2">
-              <h1 className="text-white font-bold text-[3.5rem] w-[800px]">
+            <div className="absolute top-1/2 left-6 lg:left-12 z-50  -translate-y-1/2">
+              <h1 className="text-white font-bold text-2xl lg:text-[3.5rem] w-[350px] lg:w-[800px]">
                 {currentMovie.title}
               </h1>
-              <p className="text-white mt-8 mb-8 w-[600px] text-xl">
-                {currentMovie.overview.slice(0, 198)}
+              <p className="hidden lg:block text-white mt-8 mb-8  lg:max-w-[600px] lg:text-xl text-sm">
+                {currentMovie.overview.slice(0, 108)}
               </p>
               <div className="flex gap-6 mt-4">
-                <button className="px-6 py-2 bg-white text-black rounded-md flex gap-4 items-center font-bold">
-                  <FaPlay size={25} />
+                <button className=" px-2 lg:px-6 py-1 bg-white text-black rounded-md flex gap-4 items-center font-bold">
+                  <FaPlay />
                   Play
                 </button>
-                <button className="bg-gray-600 px-6 py-2 rounded-md flex items-center gap-4 font-bold text-white">
-                  <GoInfo size={25} />
+                <button className="bg-gray-600 px-2 lg:px-6 py-1 rounded-md flex items-center gap-4 font-bold text-white">
+                  <GoInfo />
                   More Info
                 </button>
               </div>

@@ -119,7 +119,7 @@ export default function MovieSlider({ movies, title }: Movies) {
 
         const data = await response.json();
         const trailer = data.results.find(
-          (video) => video.type === "Trailer" && video.site === "YouTube"
+          (video: any) => video.type === "Trailer" && video.site === "YouTube"
         );
 
         if (trailer) {
@@ -143,21 +143,35 @@ export default function MovieSlider({ movies, title }: Movies) {
     };
   }, [hoveredMovie]);
 
+  // const handlePosterHover = (movie: Movie) => {
+  //   setHoveredMovie(movie);
+  // };
+
+  // const handlePosterLeave = () => {
+  //   setHoveredMovie(null);
+  // };
+
   const handlePosterHover = (movie: Movie) => {
-    setHoveredMovie(movie);
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredMovie(movie); // ✅ This updates `hoveredMovie`
+    }, 500); // Small delay before showing the trailer
   };
 
   const handlePosterLeave = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     setHoveredMovie(null);
   };
-
   return (
     <div
-      className="w-full pl-14 relative cursor-pointer overflow-visible"
+      className="w-full pl-6 lg:pl-14 relative cursor-pointer "
       onMouseEnter={() => setShowArrows(true)}
       onMouseLeave={() => setShowArrows(false)}
     >
-      <h2 className="text-white font-bold text-2xl absolute -top-1">{title}</h2>
+      <h2 className="text-white font-bold text-md lg:text-2xl absolute top-[12px] lg:-top-1">
+        {title}
+      </h2>
 
       <div
         className="flex items-center h-full space-x-2 overflow-x-scroll scrollbar-hide py-12  "
@@ -168,7 +182,7 @@ export default function MovieSlider({ movies, title }: Movies) {
             key={movie?.id}
             onMouseEnter={() => handlePosterHover(movie)}
             onMouseLeave={handlePosterLeave}
-            className="lg:min-w-[280px] xl:min-w-[350px] lg:h-[200px] xl:h-[250px] rounded-md   shadow-2xl "
+            className="min-w-[180px] h-[180px] lg:min-w-[280px] xl:min-w-[300px] lg:h-[200px] xl:h-[250px] rounded-md   shadow-2xl "
           >
             <Image
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
